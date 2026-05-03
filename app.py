@@ -1,22 +1,24 @@
 import os
 import uuid
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template
 from pymongo import MongoClient
 from dotenv import load_dotenv
 from utils.paystation import initiate_payment, verify_payment
 
-load_dotenv()
+load_dotenv()  # loads .env even on Vercel
 
 app = Flask(__name__)
 
+# ENV
+MONGO_URI = os.getenv("MONGO_URI")
+MERCHANT_ID = os.getenv("MERCHANT_ID")
+PAYSTATION_PASSWORD = os.getenv("PAYSTATION_PASSWORD")
+BASE_URL = os.getenv("BASE_URL")
+
 # Mongo
-client = MongoClient(os.getenv("MONGO_URI"))
+client = MongoClient(MONGO_URI)
 db = client["paystation_demo"]
 orders = db["orders"]
-
-MERCHANT_ID = os.getenv("MERCHANT_ID")
-PASSWORD = os.getenv("PAYSTATION_PASSWORD")
-BASE_URL = os.getenv("BASE_URL")
 
 
 @app.route("/")
@@ -46,13 +48,13 @@ def buy():
         "callback_url": f"{BASE_URL}/payment/callback",
         "checkout_items": "Single Product",
         "merchantId": MERCHANT_ID,
-        "password": PASSWORD
+        "password": PAYSTATION_PASSWORD
     }
 
     res = initiate_payment(payload)
 
-    # PayStation returns redirect URL
-    return redirect(res.url)
+    # MUST return HTML PayStation sends
+    return res.text
 
 
 @app.route("/payment/callback", methods=["GET", "POST"])
@@ -60,9 +62,9 @@ def payment_callback():
     invoice = request.values.get("invoice_number")
 
     if not invoice:
-        return "Invalid callback", 400
+        return "Invalid", 400
 
-    result = verify_payment(invoice)
+    result = verify_payment(invoice, MERCHANT_ID)
 
     if result.get("status") == "SUCCESS":
         orders.update_one(

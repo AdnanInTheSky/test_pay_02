@@ -1,22 +1,17 @@
 import os
 import requests
 
-MERCHANT_ID = os.getenv("MERCHANT_ID")
-PASSWORD = os.getenv("PAYSTATION_PASSWORD")
-
 INIT_URL = "https://sandbox.paystation.com.bd/initiate-payment"
 STATUS_URL = "https://sandbox.paystation.com.bd/transaction-status"
 
+def initiate_payment(payload):
+    return requests.post(INIT_URL, files=payload, timeout=30)
 
-def initiate_payment(payload: dict):
-    return requests.post(INIT_URL, files=payload)
-
-
-def verify_payment(invoice: str):
+def verify_payment(invoice, merchant_id):
     res = requests.post(
         STATUS_URL,
-        headers={"merchantId": MERCHANT_ID},
+        headers={"merchantId": merchant_id},
         json={"invoice_number": invoice},
-        timeout=20
+        timeout=30
     )
     return res.json()
