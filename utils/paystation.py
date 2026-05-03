@@ -1,11 +1,11 @@
 import requests
 
-BASE = "https://api.paystation.com.bd"  # from docs (not sandbox)
+BASE = "https://sandbox.paystation.com.bd"
 
 def initiate_payment(payload):
     res = requests.post(
         f"{BASE}/initiate-payment",
-        data=payload,   # normal form post
+        data=payload,
         timeout=30
     )
     return res.json()
