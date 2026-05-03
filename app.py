@@ -5,13 +5,14 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 from utils.paystation import initiate_payment, verify_payment
 
-load_dotenv()  # loads .env even on Vercel
+load_dotenv()
 
 app = Flask(__name__)
 
 # ENV
 MONGO_URI = os.getenv("MONGO_URI")
-MERCHANT_ID = os.getenv("MERCHANT_ID")
+MERCHANT_ID_FORM = os.getenv("MERCHANT_ID_FORM")
+MERCHANT_ID_HEADER = os.getenv("MERCHANT_ID_HEADER")
 PAYSTATION_PASSWORD = os.getenv("PAYSTATION_PASSWORD")
 BASE_URL = os.getenv("BASE_URL")
 
@@ -47,13 +48,13 @@ def buy():
         "cust_address": "N/A",
         "callback_url": f"{BASE_URL}/payment/callback",
         "checkout_items": "Single Product",
-        "merchantId": MERCHANT_ID,
+        "merchantId": MERCHANT_ID_FORM,      # no dash
         "password": PAYSTATION_PASSWORD
     }
 
     res = initiate_payment(payload)
 
-    # MUST return HTML PayStation sends
+    # IMPORTANT: return PayStation HTML page
     return res.text
 
 
@@ -62,9 +63,9 @@ def payment_callback():
     invoice = request.values.get("invoice_number")
 
     if not invoice:
-        return "Invalid", 400
+        return "Invalid callback", 400
 
-    result = verify_payment(invoice, MERCHANT_ID)
+    result = verify_payment(invoice, MERCHANT_ID_HEADER)
 
     if result.get("status") == "SUCCESS":
         orders.update_one(
