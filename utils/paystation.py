@@ -1,19 +1,21 @@
 import requests
 
-INIT_URL = "https://sandbox.paystation.com.bd/initiate-payment"
-STATUS_URL = "https://sandbox.paystation.com.bd/transaction-status"
-
+BASE = "https://api.paystation.com.bd"  # from docs (not sandbox)
 
 def initiate_payment(payload):
-    # PayStation requires form-data fields
-    return requests.post(INIT_URL, data=payload, timeout=30)
-
-
-def verify_payment(invoice, merchant_id_header):
     res = requests.post(
-        STATUS_URL,
-        headers={"merchantId": merchant_id_header},
-        json={"invoice_number": invoice},
+        f"{BASE}/initiate-payment",
+        data=payload,   # normal form post
+        timeout=30
+    )
+    return res.json()
+
+
+def verify_payment(invoice, merchant_id):
+    res = requests.post(
+        f"{BASE}/transaction-status",
+        headers={"merchantId": merchant_id},
+        data={"invoice_number": invoice},
         timeout=30
     )
     return res.json()
