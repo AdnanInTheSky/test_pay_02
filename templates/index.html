@@ -1,12 +1,68 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>Shop</title>
+</head>
 <body>
-    <h2>Buy Product - ৳100</h2>
-    <form action="/buy" method="POST">
-        <input name="name" required placeholder="Name"><br><br>
-        <input name="phone" required placeholder="Phone"><br><br>
-        <input name="email" required placeholder="Email"><br><br>
-        <button type="submit">Pay</button>
-    </form>
+
+<h2>Products</h2>
+
+<div>
+    <button onclick="addToCart('p1')">Keyboard - ৳800</button><br><br>
+    <button onclick="addToCart('p2')">Mouse - ৳500</button><br><br>
+    <button onclick="addToCart('p3')">Headphone - ৳1200</button>
+</div>
+
+<h3>Cart</h3>
+<ul id="cartList"></ul>
+
+<h3>Customer Info</h3>
+<input id="name" placeholder="Name"><br><br>
+<input id="phone" placeholder="Phone"><br><br>
+<input id="email" placeholder="Email"><br><br>
+<input id="address" placeholder="Address"><br><br>
+
+<button onclick="checkout()">Checkout</button>
+
+<script>
+let cart = [];
+
+function addToCart(pid) {
+    cart.push(pid);
+    renderCart();
+}
+
+function renderCart() {
+    const list = document.getElementById("cartList");
+    list.innerHTML = "";
+    cart.forEach(p => {
+        const li = document.createElement("li");
+        li.innerText = p;
+        list.appendChild(li);
+    });
+}
+
+async function checkout() {
+    const res = await fetch("/buy", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            name: document.getElementById("name").value,
+            phone: document.getElementById("phone").value,
+            email: document.getElementById("email").value,
+            address: document.getElementById("address").value,
+            cart: cart
+        })
+    });
+
+    const data = await res.json();
+    if (data.payment_url) {
+        window.location.href = data.payment_url;
+    } else {
+        alert("Error");
+    }
+}
+</script>
+
 </body>
 </html>
