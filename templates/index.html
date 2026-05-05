@@ -1,68 +1,1082 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Shop</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urbor Essentials - Premium Chicken</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2d5a3d;
+            --primary-light: #4a7c59;
+            --secondary: #f4f1ea;
+            --accent: #d4a574;
+            --text: #2c3e50;
+            --text-light: #6b7280;
+            --white: #ffffff;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--secondary);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--white);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .cart-btn {
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .cart-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f4f1ea 0%, #e8e4d9 100%);
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(45,90,61,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-content .bengali {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        .hero-image {
+            position: relative;
+            text-align: center;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            box-shadow: var(--shadow-lg);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Features */
+        .features {
+            padding: 4rem 2rem;
+            background: var(--white);
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 16px;
+            background: var(--secondary);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Products Section */
+        .products {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .product-image {
+            height: 280px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+
+        .price-tag {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #ef4444;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .product-info {
+            padding: 2rem;
+        }
+
+        .product-info h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .product-info p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--secondary);
+            padding: 0.5rem;
+            border-radius: 50px;
+        }
+
+        .qty-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: var(--white);
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--primary);
+            transition: all 0.3s;
+        }
+
+        .qty-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .qty-value {
+            font-weight: 600;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background: var(--white);
+            padding: 6rem 2rem;
+        }
+
+        .testimonials-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: var(--secondary);
+            padding: 2rem;
+            border-radius: 16px;
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--primary);
+            opacity: 0.2;
+            position: absolute;
+            top: 10px;
+            left: 20px;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .author-info h4 {
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        .author-info p {
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 6rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--white);
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text);
+            transition: background 0.3s;
+        }
+
+        .faq-question:hover {
+            background: var(--secondary);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s, padding 0.3s;
+            color: var(--text-light);
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            max-height: 200px;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-icon {
+            transition: transform 0.3s;
+            color: var(--primary);
+        }
+
+        /* Checkout Section */
+        .checkout-section {
+            background: var(--white);
+            padding: 4rem 2rem;
+            margin: 4rem auto;
+            max-width: 800px;
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .checkout-section h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .cart-summary {
+            background: var(--secondary);
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+        }
+
+        .cart-summary h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .cart-items {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .cart-items li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 1.25rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Footer */
+        footer {
+            background: #0f172a;
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #94a3b8;
+            text-decoration: none;
+            line-height: 2;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #1e293b;
+            color: #64748b;
+        }
+
+        /* WhatsApp Float */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #25d366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: var(--shadow-lg);
+            cursor: pointer;
+            transition: transform 0.3s;
+            z-index: 999;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .features-grid,
+            .products-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<h2>Products</h2>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-leaf"></i>
+                urbor essentials
+            </a>
+            <ul class="nav-links">
+                <li><a href="#products">Our Products</a></li>
+                <li><a href="#features">Why Us</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+            <div class="cart-btn" onclick="scrollToCheckout()">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Cart <span id="cartCount">0</span></span>
+            </div>
+        </div>
+    </nav>
 
-<div>
-    <button onclick="addToCart('p1')">Keyboard - ৳800</button><br><br>
-    <button onclick="addToCart('p2')">Mouse - ৳500</button><br><br>
-    <button onclick="addToCart('p3')">Headphone - ৳1200</button>
-</div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <span class="bengali">রমজানে উপলক্ষে চলছে দারুণ অফার</span>
+                <h1>Premium Antibiotic-Free Chicken</h1>
+                <p>Thoughtfully raised, expertly cut — antibiotic-free chicken delivered fresh to your doorstep.</p>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <span style="background: var(--primary); color: white; padding: 0.75rem 1.5rem; border-radius: 50px; font-weight: 600;">
+                        <i class="fas fa-check-circle"></i> 100% Antibiotic Free
+                    </span>
+                    <span style="background: var(--white); color: var(--primary); padding: 0.75rem 1.5rem; border-radius: 50px; font-weight: 600; border: 2px solid var(--primary);">
+                        <i class="fas fa-shield-alt"></i> Halal Certified
+                    </span>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1587593810167-a6b9e1f1d9a7?w=600&h=600&fit=crop" alt="Fresh Chicken">
+                <div class="badge">
+                    <span style="font-size: 0.8rem;">100%</span>
+                    <span>Antibiotic<br>Free</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<h3>Cart</h3>
-<ul id="cartList"></ul>
+    <!-- Features -->
+    <section class="features" id="features">
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-snowflake"></i>
+                </div>
+                <h3>Blast Freezing</h3>
+                <p>Locks in taste & protects from bacterial attack</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-virus"></i>
+                </div>
+                <h3>100% Antibiotic-Free</h3>
+                <p>Raised without antibiotics</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-certificate"></i>
+                </div>
+                <h3>Halal Slaughter</h3>
+                <p>Ensuring complete halal slaughter</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-box"></i>
+                </div>
+                <h3>Vacuum Pack</h3>
+                <p>Keeps fresh for longer</p>
+            </div>
+        </div>
+    </section>
 
-<h3>Customer Info</h3>
-<input id="name" placeholder="Name"><br><br>
-<input id="phone" placeholder="Phone"><br><br>
-<input id="email" placeholder="Email"><br><br>
-<input id="address" placeholder="Address"><br><br>
+    <!-- Products -->
+    <section class="products" id="products">
+        <div class="section-header">
+            <span style="color: var(--primary); font-weight: 600; letter-spacing: 2px; font-size: 0.9rem;">LAB TESTED</span>
+            <h2>Our Premium Selection</h2>
+            <p>Thoughtfully raised, expertly cut — antibiotic-free chicken delivered fresh.</p>
+        </div>
 
-<button onclick="checkout()">Checkout</button>
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-image" style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);">
+                    <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400&h=400&fit=crop" alt="Whole Chicken 3kg">
+                    <div class="price-tag">৳1,260</div>
+                </div>
+                <div class="product-info">
+                    <h3>Whole Chicken (3kg)</h3>
+                    <p>Farm-fresh whole chicken, perfect for roasts & curries.</p>
+                    <div class="product-footer">
+                        <span class="price">৳1,260</span>
+                        <div class="quantity-control">
+                            <button class="qty-btn" onclick="updateQuantity('p1', -1)">-</button>
+                            <span class="qty-value" id="qty-p1">0</span>
+                            <button class="qty-btn" onclick="updateQuantity('p1', 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-<script>
-let cart = [];
+            <div class="product-card">
+                <div class="product-image" style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);">
+                    <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400&h=400&fit=crop" alt="Whole Chicken 5kg">
+                    <div class="price-tag">৳2,100</div>
+                </div>
+                <div class="product-info">
+                    <h3>Whole Chicken (5kg)</h3>
+                    <p>Ideal for family meals and gatherings.</p>
+                    <div class="product-footer">
+                        <span class="price">৳2,100</span>
+                        <div class="quantity-control">
+                            <button class="qty-btn" onclick="updateQuantity('p2', -1)">-</button>
+                            <span class="qty-value" id="qty-p2">0</span>
+                            <button class="qty-btn" onclick="updateQuantity('p2', 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-function addToCart(pid) {
-    cart.push(pid);
-    renderCart();
-}
+            <div class="product-card">
+                <div class="product-image" style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);">
+                    <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400&h=400&fit=crop" alt="Whole Chicken 10kg">
+                    <div class="price-tag">৳4,050</div>
+                </div>
+                <div class="product-info">
+                    <h3>Whole Chicken (10kg)</h3>
+                    <p>Best value for large families or events.</p>
+                    <div class="product-footer">
+                        <span class="price">৳4,050</span>
+                        <div class="quantity-control">
+                            <button class="qty-btn" onclick="updateQuantity('p3', -1)">-</button>
+                            <span class="qty-value" id="qty-p3">0</span>
+                            <button class="qty-btn" onclick="updateQuantity('p3', 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-function renderCart() {
-    const list = document.getElementById("cartList");
-    list.innerHTML = "";
-    cart.forEach(p => {
-        const li = document.createElement("li");
-        li.innerText = p;
-        list.appendChild(li);
-    });
-}
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+        <div class="section-header">
+            <span style="color: var(--primary); font-weight: 600; letter-spacing: 2px; font-size: 0.9rem;">TRUSTED VOICES</span>
+            <h2>Loved by Families</h2>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <p class="testimonial-text">The quality is exceptional! My family loves the taste and I love that it's antibiotic-free.</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">SR</div>
+                    <div class="author-info">
+                        <h4>Sadia Rahman</h4>
+                        <p>Gulshan, Dhaka</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">Fresh delivery every time. The bKash payment process is so convenient!</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">AK</div>
+                    <div class="author-info">
+                        <h4>Ahmed Khan</h4>
+                        <p>Banani, Dhaka</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">Finally found a reliable chicken supplier. Worth every taka!</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">NT</div>
+                    <div class="author-info">
+                        <h4>Nusrat Tasnim</h4>
+                        <p>Dhanmondi</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-async function checkout() {
-    const res = await fetch("/buy", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-            name: document.getElementById("name").value,
-            phone: document.getElementById("phone").value,
-            email: document.getElementById("email").value,
-            address: document.getElementById("address").value,
-            cart: cart
-        })
-    });
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="section-header">
+            <span style="color: var(--primary); font-weight: 600; letter-spacing: 2px; font-size: 0.9rem;">ANSWERS</span>
+            <h2>Frequently Asked Questions</h2>
+        </div>
+        <div class="faq-list">
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>What does "antibiotic-free" really mean?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    Our chickens are raised without any antibiotics from day one. This ensures healthier meat and better taste for your family.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>How is the chicken delivered and stored?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    We use blast freezing technology and vacuum packing to ensure freshness. Delivered in insulated packaging with ice packs.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Do you deliver nationwide in Bangladesh?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    Currently, we deliver across Dhaka city. We're expanding to other cities soon!
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>How do I pay with bKash?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    During checkout, select bKash as your payment method. You'll be redirected to complete the payment securely.
+                </div>
+            </div>
+        </div>
+    </section>
 
-    const data = await res.json();
-    if (data.payment_url) {
-        window.location.href = data.payment_url;
-    } else {
-        alert("Error");
-    }
-}
-</script>
+    <!-- Checkout Section -->
+    <section class="checkout-section" id="checkout">
+        <h2><i class="fas fa-shopping-bag"></i> Complete Your Order</h2>
+        
+        <div class="cart-summary">
+            <h3>Your Cart</h3>
+            <ul class="cart-items" id="cartList">
+                <li style="color: var(--text-light); text-align: center; padding: 2rem;">Your cart is empty</li>
+            </ul>
+            <div style="border-top: 2px solid var(--primary); padding-top: 1rem; display: flex; justify-content: space-between; font-weight: 700; font-size: 1.2rem; color: var(--primary);">
+                <span>Total:</span>
+                <span id="cartTotal">৳0</span>
+            </div>
+        </div>
 
+        <h3 style="margin-bottom: 1.5rem; color: var(--primary);">Customer Information</h3>
+        <div class="form-group">
+            <label for="name">Full Name</label>
+            <input id="name" placeholder="Enter your full name">
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input id="phone" placeholder="Enter your phone number">
+        </div>
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input id="email" placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+            <label for="address">Delivery Address</label>
+            <textarea id="address" rows="3" placeholder="Enter your complete address"></textarea>
+        </div>
+
+        <button class="checkout-btn" onclick="checkout()">
+            <i class="fas fa-credit-card"></i> Proceed to Payment
+        </button>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>urbor essentials</h3>
+                <p>Premium antibiotic-free chicken, ethically raised and delivered fresh across Dhaka.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Explore</h3>
+                <a href="#products">Our Products</a><br>
+                <a href="#features">Why Us</a><br>
+                <a href="#testimonials">Testimonials</a><br>
+                <a href="#faq">FAQ</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>
+                    <i class="fas fa-map-marker-alt"></i> Dhaka, Bangladesh<br>
+                    <i class="fas fa-phone"></i> 01794449607<br>
+                    <i class="fas fa-envelope"></i> hello@urboressentials.com
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Urbor Essentials — Purity, Naturally</p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float -->
+    <div class="whatsapp-float">
+        <i class="fab fa-whatsapp"></i>
+    </div>
+
+    <script>
+        let cart = [];
+        let quantities = {
+            'p1': { name: 'Whole Chicken (3kg)', price: 1260, qty: 0 },
+            'p2': { name: 'Whole Chicken (5kg)', price: 2100, qty: 0 },
+            'p3': { name: 'Whole Chicken (10kg)', price: 4050, qty: 0 }
+        };
+
+        function updateQuantity(pid, change) {
+            if (quantities[pid].qty + change >= 0) {
+                quantities[pid].qty += change;
+                document.getElementById(`qty-${pid}`).textContent = quantities[pid].qty;
+                updateCart();
+            }
+        }
+
+        function updateCart() {
+            cart = [];
+            let total = 0;
+            
+            Object.keys(quantities).forEach(pid => {
+                if (quantities[pid].qty > 0) {
+                    for (let i = 0; i < quantities[pid].qty; i++) {
+                        cart.push(pid);
+                    }
+                    total += quantities[pid].price * quantities[pid].qty;
+                }
+            });
+
+            renderCart();
+            document.getElementById('cartCount').textContent = cart.length;
+            document.getElementById('cartTotal').textContent = '৳' + total.toLocaleString();
+        }
+
+        function renderCart() {
+            const list = document.getElementById("cartList");
+            list.innerHTML = "";
+            
+            if (cart.length === 0) {
+                list.innerHTML = '<li style="color: var(--text-light); text-align: center; padding: 2rem;">Your cart is empty</li>';
+                return;
+            }
+
+            const itemCounts = {};
+            cart.forEach(p => {
+                itemCounts[p] = (itemCounts[p] || 0) + 1;
+            });
+
+            Object.keys(itemCounts).forEach(pid => {
+                const li = document.createElement("li");
+                li.innerHTML = `
+                    <span>${quantities[pid].name} x${itemCounts[pid]}</span>
+                    <span>৳${(quantities[pid].price * itemCounts[pid]).toLocaleString()}</span>
+                `;
+                list.appendChild(li);
+            });
+        }
+
+        function scrollToCheckout() {
+            document.getElementById('checkout').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function toggleFaq(element) {
+            const item = element.parentElement;
+            const allItems = document.querySelectorAll('.faq-item');
+            
+            allItems.forEach(faq => {
+                if (faq !== item) {
+                    faq.classList.remove('active');
+                }
+            });
+            
+            item.classList.toggle('active');
+        }
+
+        async function checkout() {
+            if (cart.length === 0) {
+                alert("Please add items to your cart first!");
+                return;
+            }
+
+            const name = document.getElementById("name").value;
+            const phone = document.getElementById("phone").value;
+            const email = document.getElementById("email").value;
+            const address = document.getElementById("address").value;
+
+            if (!name || !phone || !address) {
+                alert("Please fill in all required fields!");
+                return;
+            }
+
+            const res = await fetch("/buy", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    name: name,
+                    phone: phone,
+                    email: email,
+                    address: address,
+                    cart: cart
+                })
+            });
+
+            const data = await res.json();
+            if (data.payment_url) {
+                window.location.href = data.payment_url;
+            } else {
+                alert("Error processing your order. Please try again.");
+            }
+        }
+    </script>
 </body>
 </html>
