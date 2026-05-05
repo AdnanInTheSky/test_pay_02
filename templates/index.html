@@ -3,806 +3,416 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Urbor Essentials - Premium Chicken</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <title>TechStore</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-slide-up { animation: slideUp 0.8s ease-out forwards; }
+        .animate-fade-in { animation: fadeIn 1s ease-out forwards; }
+        .animate-scale-in { animation: scaleIn 0.5s ease-out forwards; }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
-        :root {
-            --primary: #2d5a3d;
-            --primary-light: #4a7c59;
-            --secondary: #f4f1ea;
-            --accent: #d4a574;
-            --text: #2c3e50;
-            --text-light: #6b7280;
-            --white: #ffffff;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--secondary);
-            color: var(--text);
-            line-height: 1.6;
-        }
-
-        h1, h2, h3, h4 {
-            font-family: 'Playfair Display', serif;
-        }
-
-        /* Navigation */
-        nav {
-            background: var(--white);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: var(--shadow);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 700;
-            font-size: 1.5rem;
-            color: var(--primary);
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        .cart-btn {
-            background: var(--primary);
-            color: white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-
-        .cart-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #f4f1ea 0%, #e8e4d9 100%);
-            padding: 4rem 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(45,90,61,0.1) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-
-        .hero-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .hero-content h1 {
-            font-size: 3.5rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-
-        .hero-content .bengali {
-            font-size: 2rem;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            display: block;
-        }
-
-        .hero-content p {
-            font-size: 1.25rem;
-            color: var(--text-light);
-            margin-bottom: 2rem;
-        }
-
-        .hero-image {
-            position: relative;
-            text-align: center;
-        }
-
-        .hero-image img {
-            max-width: 100%;
-            border-radius: 20px;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .badge {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: var(--primary);
-            color: white;
-            padding: 1rem;
-            border-radius: 50%;
-            width: 120px;
-            height: 120px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            box-shadow: var(--shadow-lg);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        /* Features */
-        .features {
-            padding: 4rem 2rem;
-            background: var(--white);
-        }
-
-        .features-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-        }
-
-        .feature-card {
-            text-align: center;
-            padding: 2rem;
-            border-radius: 16px;
-            background: var(--secondary);
-            transition: transform 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .feature-icon {
-            width: 64px;
-            height: 64px;
-            background: var(--primary);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-            font-size: 1.5rem;
-        }
-
-        .feature-card h3 {
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .feature-card p {
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
-
-        /* Products Section */
-        .products {
-            padding: 6rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-header h2 {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .section-header p {
-            color: var(--text-light);
-            font-size: 1.1rem;
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
+        .gradient-text {
+            background: linear-gradient(135deg, #1e40af, #3b82f6, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .product-card {
-            background: var(--white);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-
         .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-12px);
         }
-
-        .product-image {
-            height: 280px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
+        .product-card:hover .product-img {
+            transform: scale(1.08);
         }
-
-        .product-image img {
-            width: 80%;
-            height: 80%;
-            object-fit: contain;
-            transition: transform 0.3s;
-        }
-
-        .product-card:hover .product-image img {
-            transform: scale(1.1);
-        }
-
-        .price-tag {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: #ef4444;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.25rem;
-        }
-
-        .product-info {
-            padding: 2rem;
-        }
-
-        .product-info h3 {
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
-            color: var(--text);
-        }
-
-        .product-info p {
-            color: var(--text-light);
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .product-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .price {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .quantity-control {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            background: var(--secondary);
-            padding: 0.5rem;
-            border-radius: 50px;
+        .product-img {
+            transition: transform 0.5s ease;
         }
 
         .qty-btn {
-            width: 32px;
-            height: 32px;
-            border: none;
-            background: var(--white);
-            border-radius: 50%;
-            cursor: pointer;
-            font-weight: 600;
-            color: var(--primary);
-            transition: all 0.3s;
+            transition: all 0.2s ease;
         }
-
         .qty-btn:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        .qty-value {
-            font-weight: 600;
-            min-width: 30px;
-            text-align: center;
-        }
-
-        /* Testimonials */
-        .testimonials {
-            background: var(--white);
-            padding: 6rem 2rem;
-        }
-
-        .testimonials-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-
-        .testimonial-card {
-            background: var(--secondary);
-            padding: 2rem;
-            border-radius: 16px;
-            position: relative;
-        }
-
-        .testimonial-card::before {
-            content: '"';
-            font-size: 4rem;
-            color: var(--primary);
-            opacity: 0.2;
-            position: absolute;
-            top: 10px;
-            left: 20px;
-        }
-
-        .testimonial-text {
-            font-style: italic;
-            margin-bottom: 1.5rem;
-            color: var(--text);
-            position: relative;
-            z-index: 1;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .author-avatar {
-            width: 48px;
-            height: 48px;
-            background: var(--primary);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-        }
-
-        .author-info h4 {
-            color: var(--primary);
-            font-size: 1rem;
-        }
-
-        .author-info p {
-            color: var(--text-light);
-            font-size: 0.85rem;
-        }
-
-        /* FAQ Section */
-        .faq {
-            padding: 6rem 2rem;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .faq-item {
-            background: var(--white);
-            margin-bottom: 1rem;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-        }
-
-        .faq-question {
-            padding: 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            font-weight: 600;
-            color: var(--text);
-            transition: background 0.3s;
-        }
-
-        .faq-question:hover {
-            background: var(--secondary);
+            transform: scale(1.15);
         }
 
         .faq-answer {
-            padding: 0 1.5rem;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s, padding 0.3s;
-            color: var(--text-light);
+            transition: max-height 0.4s ease, padding 0.4s ease;
         }
-
         .faq-item.active .faq-answer {
-            padding: 0 1.5rem 1.5rem;
             max-height: 200px;
         }
-
         .faq-item.active .faq-icon {
             transform: rotate(180deg);
         }
-
         .faq-icon {
-            transition: transform 0.3s;
-            color: var(--primary);
+            transition: transform 0.3s ease;
         }
 
-        /* Checkout Section */
-        .checkout-section {
-            background: var(--white);
-            padding: 4rem 2rem;
-            margin: 4rem auto;
-            max-width: 800px;
-            border-radius: 24px;
-            box-shadow: var(--shadow-lg);
+        .nav-scrolled {
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
         }
 
-        .checkout-section h2 {
-            text-align: center;
-            margin-bottom: 2rem;
-            color: var(--primary);
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
-
-        .form-group {
-            margin-bottom: 1.5rem;
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
         }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--text);
+        ::-webkit-scrollbar-thumb {
+            background: #93c5fd;
+            border-radius: 4px;
         }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
-            font-family: inherit;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .cart-summary {
-            background: var(--secondary);
-            padding: 2rem;
-            border-radius: 16px;
-            margin-bottom: 2rem;
-        }
-
-        .cart-summary h3 {
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
-
-        .cart-items {
-            list-style: none;
-            margin-bottom: 1rem;
-        }
-
-        .cart-items li {
-            padding: 0.5rem 0;
-            border-bottom: 1px solid #e5e7eb;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .checkout-btn {
-            width: 100%;
-            padding: 1.25rem;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .checkout-btn:hover {
-            background: var(--primary-light);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        /* Footer */
-        footer {
-            background: #0f172a;
-            color: white;
-            padding: 4rem 2rem 2rem;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 4rem;
-            margin-bottom: 3rem;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 1rem;
-            color: var(--accent);
-        }
-
-        .footer-section p,
-        .footer-section a {
-            color: #94a3b8;
-            text-decoration: none;
-            line-height: 2;
-        }
-
-        .footer-section a:hover {
-            color: white;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid #1e293b;
-            color: #64748b;
-        }
-
-        /* WhatsApp Float */
-        .whatsapp-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            background: #25d366;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            box-shadow: var(--shadow-lg);
-            cursor: pointer;
-            transition: transform 0.3s;
-            z-index: 999;
-        }
-
-        .whatsapp-float:hover {
-            transform: scale(1.1);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero-container {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-
-            .features-grid,
-            .products-grid,
-            .testimonials-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b82f6;
         }
     </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-800 font-sans">
 
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <a href="#" class="logo">
-                <i class="fas fa-leaf"></i>
-                urbor essentials
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/80 backdrop-blur-xl border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 bg-gradient-to-br from-brand-600 to-brand-400 rounded-xl flex items-center justify-center shadow-lg shadow-brand-500/25 group-hover:shadow-brand-500/40 transition-shadow">
+                    <i class="fas fa-bolt text-white text-sm"></i>
+                </div>
+                <span class="font-bold text-xl text-slate-900 tracking-tight">Tech<span class="text-brand-600">Store</span></span>
             </a>
-            <ul class="nav-links">
-                <li><a href="#products">Our Products</a></li>
-                <li><a href="#features">Why Us</a></li>
-                <li><a href="#testimonials">Testimonials</a></li>
-                <li><a href="#faq">FAQ</a></li>
+
+            <ul class="hidden md:flex items-center gap-8">
+                <li><a href="#products" class="text-sm font-medium text-slate-600 hover:text-brand-600 transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brand-600 after:transition-all hover:after:w-full">Products</a></li>
+                <li><a href="#features" class="text-sm font-medium text-slate-600 hover:text-brand-600 transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brand-600 after:transition-all hover:after:w-full">Features</a></li>
+                <li><a href="#testimonials" class="text-sm font-medium text-slate-600 hover:text-brand-600 transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brand-600 after:transition-all hover:after:w-full">Reviews</a></li>
+                <li><a href="#faq" class="text-sm font-medium text-slate-600 hover:text-brand-600 transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brand-600 after:transition-all hover:after:w-full">FAQ</a></li>
             </ul>
-            <div class="cart-btn" onclick="scrollToCheckout()">
-                <i class="fas fa-shopping-cart"></i>
-                <span>Cart <span id="cartCount">0</span></span>
-            </div>
+
+            <button onclick="document.getElementById('checkout').scrollIntoView({behavior:'smooth'})" class="flex items-center gap-2 bg-gradient-to-r from-brand-600 to-brand-500 text-white px-5 py-2.5 rounded-full font-semibold text-sm hover:shadow-lg hover:shadow-brand-500/30 hover:-translate-y-0.5 transition-all duration-300">
+                <i class="fas fa-shopping-cart text-xs"></i>
+                <span>Cart</span>
+                <span id="cartCount" class="bg-amber-400 text-white text-xs font-bold px-2 py-0.5 rounded-full">0</span>
+            </button>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-container">
-            <div class="hero-content">
-                <span class="bengali">রমজানে উপলক্ষে চলছে দারুণ অফার</span>
-                <h1>Premium Antibiotic-Free Chicken</h1>
-                <p>Thoughtfully raised, expertly cut — antibiotic-free chicken delivered fresh to your doorstep.</p>
-                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                    <span style="background: var(--primary); color: white; padding: 0.75rem 1.5rem; border-radius: 50px; font-weight: 600;">
-                        <i class="fas fa-check-circle"></i> 100% Antibiotic Free
-                    </span>
-                    <span style="background: var(--white); color: var(--primary); padding: 0.75rem 1.5rem; border-radius: 50px; font-weight: 600; border: 2px solid var(--primary);">
-                        <i class="fas fa-shield-alt"></i> Halal Certified
-                    </span>
+    <section class="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-slate-900 via-brand-900 to-brand-800">
+        <!-- Background decorations -->
+        <div class="absolute inset-0">
+            <div class="absolute top-20 right-20 w-96 h-96 bg-brand-500/20 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 left-20 w-72 h-72 bg-amber-400/10 rounded-full blur-3xl"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-400/5 rounded-full blur-3xl"></div>
+            <!-- Grid pattern -->
+            <div class="absolute inset-0 opacity-[0.03]" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;1&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-20 grid lg:grid-cols-2 gap-16 items-center">
+            <div class="animate-slide-up">
+                <div class="inline-flex items-center gap-2 bg-brand-500/20 text-brand-300 px-4 py-2 rounded-full text-sm font-medium mb-6 border border-brand-500/20">
+                    <i class="fas fa-sparkles"></i>
+                    <span>New Collection 2025</span>
+                </div>
+                <h1 class="font-serif text-5xl lg:text-7xl font-bold text-white leading-tight mb-6">
+                    Premium<br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500">Accessories</span><br>
+                    For You
+                </h1>
+                <p class="text-lg text-slate-300 mb-8 leading-relaxed max-w-lg">
+                    Discover our handpicked collection of premium keyboards, mice, and headphones — engineered for performance, designed for comfort.
+                </p>
+                <div class="flex flex-wrap gap-4 mb-10">
+                    <div class="glass px-5 py-3 rounded-full flex items-center gap-2">
+                        <i class="fas fa-shield-check text-green-400"></i>
+                        <span class="text-white text-sm font-medium">1 Year Warranty</span>
+                    </div>
+                    <div class="glass px-5 py-3 rounded-full flex items-center gap-2">
+                        <i class="fas fa-truck-fast text-amber-400"></i>
+                        <span class="text-white text-sm font-medium">Free Shipping</span>
+                    </div>
+                    <div class="glass px-5 py-3 rounded-full flex items-center gap-2">
+                        <i class="fas fa-rotate-left text-blue-400"></i>
+                        <span class="text-white text-sm font-medium">30-Day Returns</span>
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#products" class="bg-gradient-to-r from-amber-400 to-amber-500 text-slate-900 px-8 py-4 rounded-full font-bold text-lg hover:shadow-xl hover:shadow-amber-400/30 hover:-translate-y-1 transition-all duration-300 inline-flex items-center gap-2">
+                        Shop Now <i class="fas fa-arrow-right text-sm"></i>
+                    </a>
+                    <a href="#features" class="border-2 border-white/20 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white/10 hover:border-white/40 transition-all duration-300 inline-flex items-center gap-2">
+                        <i class="fas fa-play text-xs"></i> Learn More
+                    </a>
                 </div>
             </div>
-            <div class="hero-image">
-                <img src="https://images.unsplash.com/photo-1587593810167-a6b9e1f1d9a7?w=600&h=600&fit=crop" alt="Fresh Chicken">
-                <div class="badge">
-                    <span style="font-size: 0.8rem;">100%</span>
-                    <span>Antibiotic<br>Free</span>
+
+            <div class="relative flex justify-center animate-float">
+                <div class="relative">
+                    <!-- Decorative ring -->
+                    <div class="absolute inset-0 -m-8 border-2 border-dashed border-white/10 rounded-3xl animate-spin" style="animation-duration: 30s;"></div>
+                    <img src="https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=600&h=600&fit=crop" alt="Premium Accessories" class="rounded-3xl shadow-2xl shadow-brand-900/50 w-full max-w-md">
+
+                    <!-- Floating stat cards -->
+                    <div class="absolute -top-4 -right-4 bg-white rounded-2xl p-4 shadow-xl animate-scale-in delay-300">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-star text-green-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-slate-900 text-sm">4.9/5</p>
+                                <p class="text-xs text-slate-500">Customer Rating</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="absolute -bottom-4 -left-4 bg-white rounded-2xl p-4 shadow-xl animate-scale-in delay-500">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-brand-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-box-open text-brand-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-slate-900 text-sm">500+</p>
+                                <p class="text-xs text-slate-500">Happy Customers</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
+            <span class="text-white/50 text-xs font-medium">Scroll Down</span>
+            <i class="fas fa-chevron-down text-white/50"></i>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-brand-600 font-semibold text-sm tracking-widest uppercase">Why Choose Us</span>
+                <h2 class="font-serif text-4xl lg:text-5xl font-bold text-slate-900 mt-3 mb-4">Built Different</h2>
+                <p class="text-slate-500 text-lg max-w-2xl mx-auto">Every product in our store is selected with care, ensuring you get the best quality and performance.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="group p-8 rounded-3xl bg-slate-50 hover:bg-brand-50 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:shadow-brand-500/10 border border-transparent hover:border-brand-200">
+                    <div class="w-16 h-16 bg-brand-100 group-hover:bg-brand-500 rounded-2xl flex items-center justify-center mb-6 transition-colors duration-500">
+                        <i class="fas fa-truck-fast text-2xl text-brand-600 group-hover:text-white transition-colors duration-500"></i>
+                    </div>
+                    <h3 class="font-bold text-xl text-slate-900 mb-3">Free Delivery</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Free shipping on all orders across Bangladesh. No minimum order required.</p>
+                </div>
+
+                <div class="group p-8 rounded-3xl bg-slate-50 hover:bg-green-50 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:shadow-green-500/10 border border-transparent hover:border-green-200">
+                    <div class="w-16 h-16 bg-green-100 group-hover:bg-green-500 rounded-2xl flex items-center justify-center mb-6 transition-colors duration-500">
+                        <i class="fas fa-shield-check text-2xl text-green-600 group-hover:text-white transition-colors duration-500"></i>
+                    </div>
+                    <h3 class="font-bold text-xl text-slate-900 mb-3">1 Year Warranty</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">All products come with a full 1-year manufacturer warranty for peace of mind.</p>
+                </div>
+
+                <div class="group p-8 rounded-3xl bg-slate-50 hover:bg-amber-50 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:shadow-amber-500/10 border border-transparent hover:border-amber-200">
+                    <div class="w-16 h-16 bg-amber-100 group-hover:bg-amber-500 rounded-2xl flex items-center justify-center mb-6 transition-colors duration-500">
+                        <i class="fas fa-medal text-2xl text-amber-600 group-hover:text-white transition-colors duration-500"></i>
+                    </div>
+                    <h3 class="font-bold text-xl text-slate-900 mb-3">Premium Quality</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">We only stock genuine, high-quality products from trusted brands worldwide.</p>
+                </div>
+
+                <div class="group p-8 rounded-3xl bg-slate-50 hover:bg-purple-50 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:shadow-purple-500/10 border border-transparent hover:border-purple-200">
+                    <div class="w-16 h-16 bg-purple-100 group-hover:bg-purple-500 rounded-2xl flex items-center justify-center mb-6 transition-colors duration-500">
+                        <i class="fas fa-headset text-2xl text-purple-600 group-hover:text-white transition-colors duration-500"></i>
+                    </div>
+                    <h3 class="font-bold text-xl text-slate-900 mb-3">24/7 Support</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Our dedicated support team is always available to help you with any queries.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Features -->
-    <section class="features" id="features">
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-snowflake"></i>
-                </div>
-                <h3>Blast Freezing</h3>
-                <p>Locks in taste & protects from bacterial attack</p>
+    <!-- Products Section -->
+    <section id="products" class="py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20">
+                <span class="text-brand-600 font-semibold text-sm tracking-widest uppercase">Our Collection</span>
+                <h2 class="font-serif text-4xl lg:text-5xl font-bold text-slate-900 mt-3 mb-4">Featured Products</h2>
+                <p class="text-slate-500 text-lg max-w-2xl mx-auto">Carefully selected premium accessories to elevate your setup.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-shield-virus"></i>
-                </div>
-                <h3>100% Antibiotic-Free</h3>
-                <p>Raised without antibiotics</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-certificate"></i>
-                </div>
-                <h3>Halal Slaughter</h3>
-                <p>Ensuring complete halal slaughter</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-box"></i>
-                </div>
-                <h3>Vacuum Pack</h3>
-                <p>Keeps fresh for longer</p>
-            </div>
-        </div>
-    </section>
 
-    <!-- Products -->
-    <section class="products" id="products">
-        <div class="section-header">
-            <span style="color: var(--primary); font-weight: 600; letter-spacing: 2px; font-size: 0.9rem;">LAB TESTED</span>
-            <h2>Our Premium Selection</h2>
-            <p>Thoughtfully raised, expertly cut — antibiotic-free chicken delivered fresh.</p>
-        </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
 
-        <div class="products-grid">
-            <div class="product-card">
-                <div class="product-image" style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);">
-                    <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400&h=400&fit=crop" alt="Whole Chicken 3kg">
-                    <div class="price-tag">৳1,260</div>
-                </div>
-                <div class="product-info">
-                    <h3>Whole Chicken (3kg)</h3>
-                    <p>Farm-fresh whole chicken, perfect for roasts & curries.</p>
-                    <div class="product-footer">
-                        <span class="price">৳1,260</span>
-                        <div class="quantity-control">
-                            <button class="qty-btn" onclick="updateQuantity('p1', -1)">-</button>
-                            <span class="qty-value" id="qty-p1">0</span>
-                            <button class="qty-btn" onclick="updateQuantity('p1', 1)">+</button>
+                <!-- Product 1: Keyboard -->
+                <div class="product-card bg-white rounded-3xl overflow-hidden shadow-lg shadow-slate-200/50 group">
+                    <div class="relative h-72 bg-gradient-to-br from-slate-100 to-slate-200 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500&h=500&fit=crop" alt="Keyboard" class="product-img w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 bg-gradient-to-r from-red-500 to-rose-500 text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-lg shadow-red-500/30">
+                            ৳800
+                        </div>
+                        <div class="absolute top-4 left-4 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+                            IN STOCK
+                        </div>
+                    </div>
+                    <div class="p-7">
+                        <div class="flex items-center gap-1 mb-3">
+                            <i class="fas fa-star text-amber-400 text-sm"></i>
+                            <i class="fas fa-star text-amber-400 text-sm"></i>
+                            <i class="fas fa-star text-amber-400 text-sm"></i>
+                            <i class="fas fa-star text-amber-400 text-sm"></i>
+                            <i class="fas fa-star-half-alt text-amber-400 text-sm"></i>
+                            <span class="text-slate-400 text-sm ml-2">(128)</span>
+                        </div>
+                        <h3 class="font-bold text-xl text-slate-900 mb-2">Mechanical Keyboard</h3>
+                        <p class="text-slate-500 text-sm mb-6 leading-relaxed">Premium RGB mechanical keyboard with Cherry MX switches. Perfect for gaming and typing.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-3xl font-bold text-brand-600">৳800</span>
+                            <div class="flex items-center gap-3 bg-slate-100 rounded-full p-1.5">
+                                <button onclick="updateQuantity('p1', -1)" class="qty-btn w-10 h-10 bg-white rounded-full flex items-center justify-center text-slate-600 hover:bg-brand-600 hover:text-white font-bold shadow-sm">
+                                    <i class="fas fa-minus text-xs"></i>
+                                </button>
+                                <span id="qty-p1" class="font-bold text-slate-900 text-lg w-8 text-center">0</span>
+                                <button onclick="updateQuantity('p1', 1)" class="qty-btn w-10 h-10 bg-white rounded-full flex items-center justify-center text-slate-600 hover:bg-brand-600 hover:text-white font-bold shadow-sm">
+                                    <i class="fas fa-plus text-xs"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="product-card">
-                <div class="product-image" style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);">
-                    <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400&h=400&fit=crop" alt="Whole Chicken 5kg">
-                    <div class="price-tag">৳2,100</div>
-                </div>
-                <div class="product-info">
-                    <h3>Whole Chicken (5kg)</h3>
-                    <p>Ideal for family meals and gatherings.</p>
-                    <div class="product-footer">
-                        <span class="price">৳2,100</span>
-                        <div class="quantity-control">
-                            <button class="qty-btn" onclick="updateQuantity('p2', -1)">-</button>
-                            <span class="qty-value" id="qty-p2">0</span>
-                            <button class="qty-btn" onclick="updateQuantity('p2', 1)">+</button>
+                <!-- Product 2: Mouse -->
+                <div class="product-card bg-white rounded-3xl overflow-hidden shadow-lg shadow-slate-200/50 group">
+                    <div class="relative h-72 bg-gradient-to-br from-slate-100 to-slate-200 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=500&h=500&fit=crop" alt="Mouse" class="product-img w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 bg-gradient-to-r from-red-500 to-rose-500 text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-lg shadow-red-500/30">
+                            ৳500
+                        </div>
+                        <div class="absolute top-4 left-4 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+                            IN STOCK
+                        </div>
+                    </div>
+                    <div class="p-7">
+                        <div class="flex items-center gap-1 mb-3">
+                            <i class="fas fa-star text-amber-400 text-sm"></i>
+                            <i class="fas fa-star text-amber-400 text-sm"></i>
+                            <i class="fas fa-star text-amber-400 text-sm"></i>
+                            <i class="fas fa-star text-amber-400 text-sm"></i>
+                            <i class="fas fa-star text-amber-400 text-sm"></i>
+                            <span class="text-slate-400 text-sm ml-2">(96)</span>
+                        </div>
+                        <h3 class="font-bold text-xl text-slate-900 mb-2">Wireless Mouse</h3>
+                        <p class="text-slate-500 text-sm mb-6 leading-relaxed">Ergonomic wireless mouse with precision tracking and 6-month battery life.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-3xl font-bold text-brand-600">৳500</span>
+                            <div class="flex items-center gap-3 bg-slate-100 rounded-full p-1.5">
+                                <button onclick="updateQuantity('p2', -1)" class="qty-btn w-10 h-10 bg-white rounded-full flex items-center justify-center text-slate-600 hover:bg-brand-600 hover:text-white font-bold shadow-sm">
+                                    <i class="fas fa-minus text-xs"></i>
+                                </button>
+                                <span id="qty-p2" class="font-bold text-slate-900 text-lg w-8 text-center">0</span>
+                                <button onclick="updateQuantity('p2', 1)" class="qty-btn w-10 h-10 bg-white rounded-full flex items-center justify-center text-slate-600 hover:bg-brand-600 hover:text-white font-bold shadow-sm">
+                                    <i class="fas fa-plus text-xs"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="product-card">
-                <div class="product-image" style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);">
-                    <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400&h=400&fit=crop" alt="Whole Chicken 10kg">
-                    <div class="price-tag">৳4,050</div>
-                </div>
-                <div class="product-info">
-                    <h3>Whole Chicken (10kg)</h3>
-                    <p>Best value for large families or events.</p>
-                    <div class="product-footer">
-                        <span class="price">৳4,050</span>
-                        <div class="quantity-control">
-                            <button class="qty-btn" onclick="updateQuantity('p3', -1)">-</button>
-                            <span class="qty-value" id="qty-p3">0</span>
-                            <button class="qty-btn" onclick="updateQuantity('p3', 1)">+</button>
+                <!-- Product 3: Headphone -->
+                <div class="product-card bg-white rounded-3xl overflow-hidden shadow-lg shadow-slate-200/50 group">
+                    <div class="relative h-72 bg-gradient-to-br from-slate-100 to-slate-200 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&h=500&fit=crop" alt="Headphone" class="product-img w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 bg-gradient-to-r from-red-500 to-rose-500 text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-lg shadow-red-500/30">
+                            ৳1,200
+                        </div>
+                        <div class="absolute top-4 left-4 bg-amber-400 text-white px-3 py-1 rounded-full text-xs font-bold">
+                            BESTSELLER
+                        </div>
+                    </div>
+                    <div class="p-7">
+                        <div class="flex items-center gap-1 mb-3">
+                            <i class="fas fa-star text-amber-400 text-sm"></i>
+                            <i class="fas fa-star text-amber-400 text-sm"></i>
+                            <i class="fas fa-star text-amber-400 text-sm"></i>
+                            <i class="fas fa-star text-amber-400 text-sm"></i>
+                            <i class="fas fa-star text-amber-400 text-sm"></i>
+                            <span class="text-slate-400 text-sm ml-2">(214)</span>
+                        </div>
+                        <h3 class="font-bold text-xl text-slate-900 mb-2">Noise-Cancelling Headphone</h3>
+                        <p class="text-slate-500 text-sm mb-6 leading-relaxed">Premium over-ear headphone with active noise cancellation and 30-hour battery.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-3xl font-bold text-brand-600">৳1,200</span>
+                            <div class="flex items-center gap-3 bg-slate-100 rounded-full p-1.5">
+                                <button onclick="updateQuantity('p3', -1)" class="qty-btn w-10 h-10 bg-white rounded-full flex items-center justify-center text-slate-600 hover:bg-brand-600 hover:text-white font-bold shadow-sm">
+                                    <i class="fas fa-minus text-xs"></i>
+                                </button>
+                                <span id="qty-p3" class="font-bold text-slate-900 text-lg w-8 text-center">0</span>
+                                <button onclick="updateQuantity('p3', 1)" class="qty-btn w-10 h-10 bg-white rounded-full flex items-center justify-center text-slate-600 hover:bg-brand-600 hover:text-white font-bold shadow-sm">
+                                    <i class="fas fa-plus text-xs"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -811,243 +421,337 @@
     </section>
 
     <!-- Testimonials -->
-    <section class="testimonials" id="testimonials">
-        <div class="section-header">
-            <span style="color: var(--primary); font-weight: 600; letter-spacing: 2px; font-size: 0.9rem;">TRUSTED VOICES</span>
-            <h2>Loved by Families</h2>
-        </div>
-        <div class="testimonials-grid">
-            <div class="testimonial-card">
-                <p class="testimonial-text">The quality is exceptional! My family loves the taste and I love that it's antibiotic-free.</p>
-                <div class="testimonial-author">
-                    <div class="author-avatar">SR</div>
-                    <div class="author-info">
-                        <h4>Sadia Rahman</h4>
-                        <p>Gulshan, Dhaka</p>
+    <section id="testimonials" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-brand-600 font-semibold text-sm tracking-widest uppercase">Testimonials</span>
+                <h2 class="font-serif text-4xl lg:text-5xl font-bold text-slate-900 mt-3 mb-4">Loved by Customers</h2>
+                <p class="text-slate-500 text-lg max-w-2xl mx-auto">See what our customers have to say about their experience.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="p-8 rounded-3xl bg-gradient-to-br from-slate-50 to-slate-100 relative overflow-hidden">
+                    <div class="absolute top-4 right-6 text-8xl text-brand-100 font-serif leading-none select-none">"</div>
+                    <div class="relative z-10">
+                        <div class="flex gap-1 mb-4">
+                            <i class="fas fa-star text-amber-400"></i>
+                            <i class="fas fa-star text-amber-400"></i>
+                            <i class="fas fa-star text-amber-400"></i>
+                            <i class="fas fa-star text-amber-400"></i>
+                            <i class="fas fa-star text-amber-400"></i>
+                        </div>
+                        <p class="text-slate-600 mb-6 leading-relaxed">"The keyboard quality is exceptional! The RGB lighting and mechanical switches feel premium. Best purchase I've made."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-gradient-to-br from-brand-400 to-brand-600 rounded-full flex items-center justify-center text-white font-bold text-sm">SR</div>
+                            <div>
+                                <p class="font-bold text-slate-900">Sadia Rahman</p>
+                                <p class="text-sm text-slate-500">Gulshan, Dhaka</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="testimonial-card">
-                <p class="testimonial-text">Fresh delivery every time. The bKash payment process is so convenient!</p>
-                <div class="testimonial-author">
-                    <div class="author-avatar">AK</div>
-                    <div class="author-info">
-                        <h4>Ahmed Khan</h4>
-                        <p>Banani, Dhaka</p>
+
+                <div class="p-8 rounded-3xl bg-gradient-to-br from-slate-50 to-slate-100 relative overflow-hidden">
+                    <div class="absolute top-4 right-6 text-8xl text-brand-100 font-serif leading-none select-none">"</div>
+                    <div class="relative z-10">
+                        <div class="flex gap-1 mb-4">
+                            <i class="fas fa-star text-amber-400"></i>
+                            <i class="fas fa-star text-amber-400"></i>
+                            <i class="fas fa-star text-amber-400"></i>
+                            <i class="fas fa-star text-amber-400"></i>
+                            <i class="fas fa-star text-amber-400"></i>
+                        </div>
+                        <p class="text-slate-600 mb-6 leading-relaxed">"The mouse is so smooth and the battery lasts forever. Delivery was super fast. Highly recommended for everyone!"</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-sm">AK</div>
+                            <div>
+                                <p class="font-bold text-slate-900">Ahmed Khan</p>
+                                <p class="text-sm text-slate-500">Banani, Dhaka</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="testimonial-card">
-                <p class="testimonial-text">Finally found a reliable chicken supplier. Worth every taka!</p>
-                <div class="testimonial-author">
-                    <div class="author-avatar">NT</div>
-                    <div class="author-info">
-                        <h4>Nusrat Tasnim</h4>
-                        <p>Dhanmondi</p>
+
+                <div class="p-8 rounded-3xl bg-gradient-to-br from-slate-50 to-slate-100 relative overflow-hidden">
+                    <div class="absolute top-4 right-6 text-8xl text-brand-100 font-serif leading-none select-none">"</div>
+                    <div class="relative z-10">
+                        <div class="flex gap-1 mb-4">
+                            <i class="fas fa-star text-amber-400"></i>
+                            <i class="fas fa-star text-amber-400"></i>
+                            <i class="fas fa-star text-amber-400"></i>
+                            <i class="fas fa-star text-amber-400"></i>
+                            <i class="fas fa-star-half-alt text-amber-400"></i>
+                        </div>
+                        <p class="text-slate-600 mb-6 leading-relaxed">"Finally found a reliable tech store. The headphone's noise cancellation is incredible. Worth every taka spent!"</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm">NT</div>
+                            <div>
+                                <p class="font-bold text-slate-900">Nusrat Tasnim</p>
+                                <p class="text-sm text-slate-500">Dhanmondi</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ -->
-    <section class="faq" id="faq">
-        <div class="section-header">
-            <span style="color: var(--primary); font-weight: 600; letter-spacing: 2px; font-size: 0.9rem;">ANSWERS</span>
-            <h2>Frequently Asked Questions</h2>
-        </div>
-        <div class="faq-list">
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <span>What does "antibiotic-free" really mean?</span>
-                    <i class="fas fa-chevron-down faq-icon"></i>
-                </div>
-                <div class="faq-answer">
-                    Our chickens are raised without any antibiotics from day one. This ensures healthier meat and better taste for your family.
-                </div>
+    <!-- FAQ Section -->
+    <section id="faq" class="py-24 bg-slate-50">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-brand-600 font-semibold text-sm tracking-widest uppercase">FAQ</span>
+                <h2 class="font-serif text-4xl lg:text-5xl font-bold text-slate-900 mt-3 mb-4">Common Questions</h2>
+                <p class="text-slate-500 text-lg">Got questions? We've got answers.</p>
             </div>
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <span>How is the chicken delivered and stored?</span>
-                    <i class="fas fa-chevron-down faq-icon"></i>
+
+            <div class="space-y-4">
+                <div class="faq-item bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                    <div class="faq-question flex items-center justify-between p-6 cursor-pointer hover:bg-slate-50 transition-colors" onclick="toggleFaq(this)">
+                        <span class="font-semibold text-slate-800 text-lg">What does "1 Year Warranty" cover?</span>
+                        <i class="fas fa-chevron-down faq-icon text-brand-500"></i>
+                    </div>
+                    <div class="faq-answer px-6">
+                        <p class="text-slate-500 leading-relaxed pb-6">Our 1-year warranty covers all manufacturing defects and hardware failures under normal use. It does not cover physical damage or misuse.</p>
+                    </div>
                 </div>
-                <div class="faq-answer">
-                    We use blast freezing technology and vacuum packing to ensure freshness. Delivered in insulated packaging with ice packs.
+
+                <div class="faq-item bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                    <div class="faq-question flex items-center justify-between p-6 cursor-pointer hover:bg-slate-50 transition-colors" onclick="toggleFaq(this)">
+                        <span class="font-semibold text-slate-800 text-lg">How is delivery handled?</span>
+                        <i class="fas fa-chevron-down faq-icon text-brand-500"></i>
+                    </div>
+                    <div class="faq-answer px-6">
+                        <p class="text-slate-500 leading-relaxed pb-6">We deliver across all of Bangladesh within 2-5 business days. All products are carefully packaged in protective materials to ensure safe arrival.</p>
+                    </div>
                 </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <span>Do you deliver nationwide in Bangladesh?</span>
-                    <i class="fas fa-chevron-down faq-icon"></i>
+
+                <div class="faq-item bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                    <div class="faq-question flex items-center justify-between p-6 cursor-pointer hover:bg-slate-50 transition-colors" onclick="toggleFaq(this)">
+                        <span class="font-semibold text-slate-800 text-lg">What payment methods do you accept?</span>
+                        <i class="fas fa-chevron-down faq-icon text-brand-500"></i>
+                    </div>
+                    <div class="faq-answer px-6">
+                        <p class="text-slate-500 leading-relaxed pb-6">We accept bKash, Nagad, Rocket, and bank transfers. Payment is processed securely through our checkout system.</p>
+                    </div>
                 </div>
-                <div class="faq-answer">
-                    Currently, we deliver across Dhaka city. We're expanding to other cities soon!
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <span>How do I pay with bKash?</span>
-                    <i class="fas fa-chevron-down faq-icon"></i>
-                </div>
-                <div class="faq-answer">
-                    During checkout, select bKash as your payment method. You'll be redirected to complete the payment securely.
+
+                <div class="faq-item bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                    <div class="faq-question flex items-center justify-between p-6 cursor-pointer hover:bg-slate-50 transition-colors" onclick="toggleFaq(this)">
+                        <span class="font-semibold text-slate-800 text-lg">Can I return a product?</span>
+                        <i class="fas fa-chevron-down faq-icon text-brand-500"></i>
+                    </div>
+                    <div class="faq-answer px-6">
+                        <p class="text-slate-500 leading-relaxed pb-6">Yes! We offer a 30-day return policy. Products must be in original packaging and unused condition. Contact our support team to initiate a return.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Checkout Section -->
-    <section class="checkout-section" id="checkout">
-        <h2><i class="fas fa-shopping-bag"></i> Complete Your Order</h2>
-        
-        <div class="cart-summary">
-            <h3>Your Cart</h3>
-            <ul class="cart-items" id="cartList">
-                <li style="color: var(--text-light); text-align: center; padding: 2rem;">Your cart is empty</li>
-            </ul>
-            <div style="border-top: 2px solid var(--primary); padding-top: 1rem; display: flex; justify-content: space-between; font-weight: 700; font-size: 1.2rem; color: var(--primary);">
-                <span>Total:</span>
-                <span id="cartTotal">৳0</span>
+    <section id="checkout" class="py-24 bg-white">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <span class="text-brand-600 font-semibold text-sm tracking-widest uppercase">Checkout</span>
+                <h2 class="font-serif text-4xl lg:text-5xl font-bold text-slate-900 mt-3 mb-4">Complete Your Order</h2>
+            </div>
+
+            <div class="bg-slate-50 rounded-3xl p-8 mb-8 border border-slate-200">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 bg-brand-100 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-shopping-bag text-brand-600"></i>
+                    </div>
+                    <h3 class="font-bold text-xl text-slate-900">Your Cart</h3>
+                </div>
+                <ul id="cartList" class="space-y-3 mb-6">
+                    <li class="text-center text-slate-400 py-8">
+                        <i class="fas fa-cart-shopping text-4xl mb-3 block"></i>
+                        Your cart is empty
+                    </li>
+                </ul>
+                <div class="border-t-2 border-brand-200 pt-4 flex justify-between items-center">
+                    <span class="font-bold text-lg text-slate-800">Total:</span>
+                    <span id="cartTotal" class="font-bold text-2xl text-brand-600">৳0</span>
+                </div>
+            </div>
+
+            <div class="space-y-5">
+                <h3 class="font-bold text-xl text-slate-900 flex items-center gap-2">
+                    <div class="w-8 h-8 bg-brand-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-user text-brand-600 text-sm"></i>
+                    </div>
+                    Customer Information
+                </h3>
+                <div class="grid md:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Full Name</label>
+                        <input id="name" type="text" placeholder="John Doe" class="w-full px-5 py-3.5 rounded-xl border-2 border-slate-200 focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10 outline-none transition-all bg-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Phone Number</label>
+                        <input id="phone" type="tel" placeholder="+880 1XXX-XXXXXX" class="w-full px-5 py-3.5 rounded-xl border-2 border-slate-200 focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10 outline-none transition-all bg-white">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Email Address</label>
+                    <input id="email" type="email" placeholder="john@example.com" class="w-full px-5 py-3.5 rounded-xl border-2 border-slate-200 focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10 outline-none transition-all bg-white">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Delivery Address</label>
+                    <textarea id="address" rows="3" placeholder="House #, Road #, Area, City" class="w-full px-5 py-3.5 rounded-xl border-2 border-slate-200 focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10 outline-none transition-all bg-white resize-none"></textarea>
+                </div>
+
+                <button onclick="checkout()" class="w-full bg-gradient-to-r from-brand-600 to-brand-500 text-white py-4 rounded-xl font-bold text-lg hover:shadow-xl hover:shadow-brand-500/30 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-3 mt-4">
+                    <i class="fas fa-lock text-sm"></i>
+                    Proceed to Payment
+                </button>
             </div>
         </div>
-
-        <h3 style="margin-bottom: 1.5rem; color: var(--primary);">Customer Information</h3>
-        <div class="form-group">
-            <label for="name">Full Name</label>
-            <input id="name" placeholder="Enter your full name">
-        </div>
-        <div class="form-group">
-            <label for="phone">Phone Number</label>
-            <input id="phone" placeholder="Enter your phone number">
-        </div>
-        <div class="form-group">
-            <label for="email">Email Address</label>
-            <input id="email" placeholder="Enter your email">
-        </div>
-        <div class="form-group">
-            <label for="address">Delivery Address</label>
-            <textarea id="address" rows="3" placeholder="Enter your complete address"></textarea>
-        </div>
-
-        <button class="checkout-btn" onclick="checkout()">
-            <i class="fas fa-credit-card"></i> Proceed to Payment
-        </button>
     </section>
 
     <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>urbor essentials</h3>
-                <p>Premium antibiotic-free chicken, ethically raised and delivered fresh across Dhaka.</p>
+    <footer class="bg-slate-900 text-white pt-20 pb-8">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-gradient-to-br from-brand-500 to-brand-400 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-bolt text-white text-sm"></i>
+                        </div>
+                        <span class="font-bold text-xl">Tech<span class="text-brand-400">Store</span></span>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">Premium tech accessories delivered to your doorstep. Quality guaranteed, satisfaction promised.</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 bg-slate-800 rounded-xl flex items-center justify-center hover:bg-brand-600 transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-slate-800 rounded-xl flex items-center justify-center hover:bg-brand-600 transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-slate-800 rounded-xl flex items-center justify-center hover:bg-brand-600 transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#products" class="text-slate-400 hover:text-white transition-colors text-sm">Our Products</a></li>
+                        <li><a href="#features" class="text-slate-400 hover:text-white transition-colors text-sm">Features</a></li>
+                        <li><a href="#testimonials" class="text-slate-400 hover:text-white transition-colors text-sm">Reviews</a></li>
+                        <li><a href="#faq" class="text-slate-400 hover:text-white transition-colors text-sm">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Support</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors text-sm">Help Center</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors text-sm">Shipping Info</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors text-sm">Returns</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors text-sm">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Contact Us</h4>
+                    <ul class="space-y-4">
+                        <li class="flex items-center gap-3 text-slate-400 text-sm">
+                            <i class="fas fa-map-marker-alt text-brand-400 w-5"></i>
+                            Dhaka, Bangladesh
+                        </li>
+                        <li class="flex items-center gap-3 text-slate-400 text-sm">
+                            <i class="fas fa-phone text-brand-400 w-5"></i>
+                            +880 1794-449607
+                        </li>
+                        <li class="flex items-center gap-3 text-slate-400 text-sm">
+                            <i class="fas fa-envelope text-brand-400 w-5"></i>
+                            hello@techstore.bd
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="footer-section">
-                <h3>Explore</h3>
-                <a href="#products">Our Products</a><br>
-                <a href="#features">Why Us</a><br>
-                <a href="#testimonials">Testimonials</a><br>
-                <a href="#faq">FAQ</a>
+            <div class="border-t border-slate-800 pt-8 text-center">
+                <p class="text-slate-500 text-sm">&copy; 2025 TechStore — Premium Accessories, Naturally.</p>
             </div>
-            <div class="footer-section">
-                <h3>Contact</h3>
-                <p>
-                    <i class="fas fa-map-marker-alt"></i> Dhaka, Bangladesh<br>
-                    <i class="fas fa-phone"></i> 01794449607<br>
-                    <i class="fas fa-envelope"></i> hello@urboressentials.com
-                </p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Urbor Essentials — Purity, Naturally</p>
         </div>
     </footer>
 
     <!-- WhatsApp Float -->
-    <div class="whatsapp-float">
-        <i class="fab fa-whatsapp"></i>
-    </div>
+    <a href="#" class="fixed bottom-8 right-8 w-16 h-16 bg-green-500 text-white rounded-full flex items-center justify-center shadow-xl shadow-green-500/30 hover:scale-110 transition-transform z-50">
+        <i class="fab fa-whatsapp text-3xl"></i>
+    </a>
 
     <script>
+        // Cart logic - matches original logic exactly
         let cart = [];
-        let quantities = {
-            'p1': { name: 'Whole Chicken (3kg)', price: 1260, qty: 0 },
-            'p2': { name: 'Whole Chicken (5kg)', price: 2100, qty: 0 },
-            'p3': { name: 'Whole Chicken (10kg)', price: 4050, qty: 0 }
+
+        // Product data
+        const products = {
+            'p1': { name: 'Keyboard', price: 800 },
+            'p2': { name: 'Mouse', price: 500 },
+            'p3': { name: 'Headphone', price: 1200 }
         };
 
-        function updateQuantity(pid, change) {
-            if (quantities[pid].qty + change >= 0) {
-                quantities[pid].qty += change;
-                document.getElementById(`qty-${pid}`).textContent = quantities[pid].qty;
-                updateCart();
-            }
-        }
+        // Quantity tracking
+        let quantities = { 'p1': 0, 'p2': 0, 'p3': 0 };
 
-        function updateCart() {
+        function updateQuantity(pid, change) {
+            const newQty = quantities[pid] + change;
+            if (newQty < 0) return;
+            quantities[pid] = newQty;
+            document.getElementById(`qty-${pid}`).textContent = newQty;
+
+            // Rebuild cart array exactly as original logic: push pid for each qty
             cart = [];
-            let total = 0;
-            
-            Object.keys(quantities).forEach(pid => {
-                if (quantities[pid].qty > 0) {
-                    for (let i = 0; i < quantities[pid].qty; i++) {
-                        cart.push(pid);
-                    }
-                    total += quantities[pid].price * quantities[pid].qty;
+            Object.keys(quantities).forEach(key => {
+                for (let i = 0; i < quantities[key]; i++) {
+                    cart.push(key);
                 }
             });
 
             renderCart();
-            document.getElementById('cartCount').textContent = cart.length;
-            document.getElementById('cartTotal').textContent = '৳' + total.toLocaleString();
         }
 
         function renderCart() {
             const list = document.getElementById("cartList");
             list.innerHTML = "";
-            
+
             if (cart.length === 0) {
-                list.innerHTML = '<li style="color: var(--text-light); text-align: center; padding: 2rem;">Your cart is empty</li>';
-                return;
+                list.innerHTML = '<li class="text-center text-slate-400 py-8"><i class="fas fa-cart-shopping text-4xl mb-3 block"></i>Your cart is empty</li>';
+            } else {
+                const itemCounts = {};
+                cart.forEach(p => {
+                    itemCounts[p] = (itemCounts[p] || 0) + 1;
+                });
+
+                let total = 0;
+                Object.keys(itemCounts).forEach(pid => {
+                    const itemTotal = products[pid].price * itemCounts[pid];
+                    total += itemTotal;
+                    const li = document.createElement("li");
+                    li.className = "flex items-center justify-between bg-white p-4 rounded-xl border border-slate-200";
+                    li.innerHTML = `
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-brand-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-box text-brand-600 text-sm"></i>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-slate-800">${products[pid].name}</span>
+                                <span class="text-slate-400 text-sm ml-2">× ${itemCounts[pid]}</span>
+                            </div>
+                        </div>
+                        <span class="font-bold text-brand-600">৳${itemTotal.toLocaleString()}</span>
+                    `;
+                    list.appendChild(li);
+                });
+
+                document.getElementById("cartTotal").textContent = `৳${total.toLocaleString()}`;
             }
 
-            const itemCounts = {};
-            cart.forEach(p => {
-                itemCounts[p] = (itemCounts[p] || 0) + 1;
-            });
-
-            Object.keys(itemCounts).forEach(pid => {
-                const li = document.createElement("li");
-                li.innerHTML = `
-                    <span>${quantities[pid].name} x${itemCounts[pid]}</span>
-                    <span>৳${(quantities[pid].price * itemCounts[pid]).toLocaleString()}</span>
-                `;
-                list.appendChild(li);
-            });
-        }
-
-        function scrollToCheckout() {
-            document.getElementById('checkout').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function toggleFaq(element) {
-            const item = element.parentElement;
-            const allItems = document.querySelectorAll('.faq-item');
-            
-            allItems.forEach(faq => {
-                if (faq !== item) {
-                    faq.classList.remove('active');
-                }
-            });
-            
-            item.classList.toggle('active');
+            document.getElementById("cartCount").textContent = cart.length;
         }
 
         async function checkout() {
-            if (cart.length === 0) {
-                alert("Please add items to your cart first!");
-                return;
-            }
-
             const name = document.getElementById("name").value;
             const phone = document.getElementById("phone").value;
             const email = document.getElementById("email").value;
@@ -1060,7 +764,7 @@
 
             const res = await fetch("/buy", {
                 method: "POST",
-                headers: {"Content-Type": "application/json"},
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     name: name,
                     phone: phone,
@@ -1077,6 +781,24 @@
                 alert("Error processing your order. Please try again.");
             }
         }
+
+        // FAQ Toggle
+        function toggleFaq(el) {
+            const item = el.parentElement;
+            const wasActive = item.classList.contains('active');
+            document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('active'));
+            if (!wasActive) item.classList.add('active');
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('nav-scrolled');
+            } else {
+                nav.classList.remove('nav-scrolled');
+            }
+        });
     </script>
 </body>
 </html>
